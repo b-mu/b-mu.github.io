@@ -9,7 +9,7 @@
 
 2. nvidia drivers
 * plugin gpu and turn on gpu power supply (for msi RTX2080 super, needs all of 2 x 8 pins)
-* install [geforce experience] (https://www.nvidia.com/en-us/geforce/geforce-experience/)
+* install [geforce experience](https://www.nvidia.com/en-us/geforce/geforce-experience/)
 * check drivers update in geforce experience
 * if you need nvidia control panel but it is missing, try: [standard driver instead of DCH drivers](https://www.youtube.com/watch?v=Ytnv8XJ_hV4) by using [advance drivers search](https://www.nvidia.com/Download/Find.aspx)
 
