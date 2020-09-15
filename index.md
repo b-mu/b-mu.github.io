@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+# mac os 10.15 + bootcamp(win 10) + nvidia eGPU
 
-You can use the [editor on GitHub](https://github.com/2zki3/2zki3.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+0. back up mac
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+1. bootcamp win 10
+* download [win 10 iso](https://www.microsoft.com/en-ca/software-download/) (~5.7G)
+* launch bootcamp, select a partition size, install windows ([Apple's instruction](https://support.apple.com/en-ca/HT201468))
+* system will reboot in windows
 
-### Markdown
+2. nvidia drivers
+* plugin gpu and turn on gpu power supply (for msi RTX2080 super, needs all of 2 x 8 pins)
+* install [geforce experience] (https://www.nvidia.com/en-us/geforce/geforce-experience/)
+* check drivers update in geforce experience
+* if you need nvidia control panel but it is missing, try: [standard driver instead of DCH drivers](https://www.youtube.com/watch?v=Ytnv8XJ_hV4) by using [advance drivers search](https://www.nvidia.com/Download/Find.aspx)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+3. anaconda
+* install [anaconda](https://www.anaconda.com/products/individual)
+  * tick add anaconda to Path variable
+  * or do it manually by start -> type "env var" -> click "edit the system environment variables" -> click "environment variables" -> click "Path" under User variables and click edit -> add "C:\Users\[user_name]\anaconda3; C:\Users\[user_name]\anaconda3\Scripts;"
+* create env ```conda create --name env_gpu```
+* install tensorfow-gpu 1 ```conda install tensorflow-gpu=1.15``` (this will automatically install cuda 10.0 and cudnn 7.6, [compatible](https://www.tensorflow.org/install/source) with tensorflow 1.15)
+* check if gpu is visible: [several methods](https://stackoverflow.com/questions/38009682/how-to-tell-if-tensorflow-is-using-gpu-acceleration-from-inside-python-shell/38019608), alternatively, run the command: ```nvidia-smi```
 
-```markdown
-Syntax highlighted code block
+4. git-bash
+* install [git](https://git-scm.com/downloads)
+* if anaconda is successfully added to Path variable, then the command "conda activate env_gpu" should be recognized and the environment should be activated
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/2zki3/2zki3.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+up to now, python scripts should be able to run in this environment. on the other hand, since it is in a bash shell, .sh scripts should also work.
