@@ -1,9 +1,14 @@
-# mac os 10.15 + bootcamp(win 10) + nvidia eGPU
+---
+layout: post
+title:  "mac os 10.15 + bootcamp(win 10) + nvidia eGPU"
+date:   2020-09-15 00:21:00 -0400
+categories: jekyll update
+---
 
 0. back up mac
 
 1. bootcamp win 10
-* download [win 10 iso](https://www.microsoft.com/en-ca/software-download/) (~5.7G)
+* download [win 10 iso](https://www.microsoft.com/en-ca/software-download/)(```~```5.7G)
 * launch bootcamp, select a partition size, install windows ([Apple's instruction](https://support.apple.com/en-ca/HT201468))
 * system will reboot in windows
 
