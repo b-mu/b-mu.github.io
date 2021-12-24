@@ -1,0 +1,43 @@
+---
+layout: post
+title:  "Variational Inference: ELBO and reparameterization trick"
+date:   2021-12-23 00:21:00 -0400
+categories: jekyll update
+---
+
+# Variational Inference
+* **latent variables**
+	* latent/hidden variable: a random variable that cannot be conditioned on for inference because its value is unknown
+	* Let the latent r.v. $\mathbf{Z}$ have distribution $p_{\theta^\*}$ and the variable $\mathbf{X}$ have conditional distribution $p_{\theta^\*} (x \vert z)$
+* **objective**
+	* get a maximum likelihood estimate for $\theta$, denoted $\theta_{MLE}$, so that we can estimate the distribution of variable given the latent variable $p_{\theta_{MLE}}(x \vert z)$ and marginal likelihood of an variable $p_{\theta_{MLE}}(x)$
+	* **maximum likelihood estimate** $\theta_{MLE}$: by maximizing the marginal likelihood
+	\\[p_{\theta}(x) = \int p_{\theta} (x \vert z) p_{\theta}(z) dz\\]
+		* suppose $p_{\theta} (x)$ and $p_{\theta} (z \vert x)$ are *intractable*
+		* **Variational Inference**: approximate the posterior $p_{\theta}(z \vert x)$ then use it to estimate a lower bound on $\text{log } p_{\theta}(x)$ to update $\theta$
+			* Let $q_{\phi} (z \vert x)$ be an approximating distribution for $p_{\theta} (z \vert x)$
+			* $q_{\phi}$ is fit to $p_{\theta}$ by minimizing the **Kullback-Leibler (KL) divergence** \\[D_{KL}(q_{\phi} (z \vert x) ~\Vert~ p_{\theta} (z \vert x))\\]
+		* the idea of using the posterior $p_{\theta} (z \vert x)$ to estimate the marginal likelihood is also used in the EM algorithm
+* **evidence lower bound (ELBO)**
+	* derivation:
+	$$\begin{align}
+		&p_{\theta}(z \vert x) = \frac{p_{\theta} (x, z)}{p_{\theta} (x)} ~~~ \# \text{ by definition of conditional probability}\\
+		\Rightarrow &\text{log } p_{\theta} (x) = - \text{log } p_{\theta} (z \vert x) + \text{log } p_{\theta} (x, z) ~~~ \# \text{ take log}\\
+		\Rightarrow &\text{log } p_{\theta} (x) = - \text{log } p_{\theta} (z \vert x) + \text{log } p_{\theta} (x, z) + \text{log } q_{\phi} (z \vert x) - \text{log } q_{\phi} (z \vert x) ~~~ \# \text{ add and subtract}\\
+		\Rightarrow &\text{log } p_{\theta} (x) = \text{log } \frac{q_{\phi} (z \vert x)}{p_{\theta} (z \vert x)} + \text{log } \frac{p_{\theta} (x, z)}{q_{\phi} (z \vert x)} ~~~ \# \text{ rearrange}\\
+		\Rightarrow &\text{log } p_{\theta} (x) = \underbrace{E_{z \sim q_{\phi}}\bigg[ \text{log } \frac{q_{\phi}(z \vert x)}{p_{\theta}(z \vert x)}\bigg]}_{D_{KL}(q_{\phi} \Vert p_{\theta})} + E_{z \sim q_{\phi}} [\text{log } p_{\theta}(x, z) - \text{log } q_{\phi} (z \vert x)] ~~~\# \text{ take expectation w.r.t. } z
+	\end{align}
+	$$
+		* By holding $\theta$ as fixed, the LHS is fixed. If we increase $E_{z \sim q_{\phi}} [\text{log } p_{\theta} (x, z) - q_{\phi}(z \vert x)]$ w.r.t. $\phi$, then the KL divergence will decrease and the approximating distribution is improved. 
+		* Since the KL divergence is non-negative, we have \\[\text{log } p_{\theta} (x) \geq E_{z \sim q_{\phi}} \bigg[ \text{log } p_{\theta} (x, z) - q_{\phi} (z \vert x) \bigg]\\]
+		* Denote the lower bound (ELBO) on the RHS by $\mathcal{L}(\theta, \phi; x)$. It is the objective function maximized in Variational Inference.
+	* an analytical form may not be available for ELBO, use a Monte Carlo estimate of the expectation instead:
+		* e.g. sample $z_i ~ (i = 1, ..., N)$ from $q_{\phi} (z \vert x)$, then
+		\\[\hat{\mathcal{L}}(\theta, \phi; x) = \frac{1}{N} \sum_{i = 1}^N \bigg[\text{log } p_{\theta} (x, z_i) - \text{log } q_{\phi} (z_i \vert x) \bigg] \\]
+			* note: gradient-based method may not be directly applicable to update $\theta$ and $\phi$, since $z_i's$ are not differentiable. This motivates the next section.
+
+* **reparameterization trick**
+	* TODO(bmu)
+
+# Reference: 
+* [Auto-Encoding Variational Bayes, Diederik P. Kingma et al. NeurIPS 2014](https://arxiv.org/abs/1312.6114)
