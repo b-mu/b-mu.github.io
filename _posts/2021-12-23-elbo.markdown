@@ -4,6 +4,7 @@ title:  "Variational Inference: ELBO and reparameterization trick"
 date:   2021-12-23 00:21:00 -0400
 categories: jekyll update
 ---
+This post is a short review of Evidience Lower Bound (ELBO), which is the standard objective function to be optimized in Variational Inference.
 
 # Variational Inference
 * **latent variables**

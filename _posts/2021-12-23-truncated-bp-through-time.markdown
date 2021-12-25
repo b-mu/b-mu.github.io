@@ -4,6 +4,7 @@ title:  "Truncated Backpropagation through Time"
 date:   2021-12-23 00:21:00 -0400
 categories: jekyll update
 ---
+This post is a short review of Backpropagation Through Time and Truncated Backpropagation Through Time algorithms with a naive RNN model.
 
 # Recurrent Neural Network
 * **motivation**
@@ -12,7 +13,7 @@ categories: jekyll update
 * **forward propagation**:
 	\\[ \mathbf{a}^{(t + 1)} = g_a(\mathbf{W_{aa}} \mathbf{a}^{(t)} + \mathbf{W_{ax}} x^{(t)} + \mathbf{b_a}), ~~~ \mathbf{y}^{(t + 1)} = g_y(\mathbf{W_{ya}} \mathbf{a}^{(t)} + \mathbf{b_y}) \\]
 	* note:
-		* this is a naive RNN model
+		* this is a naive RNN model with the simplest architecture
 		* the parameters are *shared* across the time steps
 * **backpropagation through time**
 	* loss
