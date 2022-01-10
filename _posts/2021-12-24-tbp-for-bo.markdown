@@ -28,15 +28,15 @@ This post is a paper-reading note. Paper: [Truncated Backpropagation for Bilevel
 	\\[ w_{t + 1} =  \Xi_{t + 1} (w_t, \lambda), ~~~ \hat{w_0} = \Xi_{\lambda} \text{ at } t = 0, ~~~ \hat{w} = w_T\\]
 	* unrolling the computation graph:
 	\\[ \frac{df}{d\lambda} = \frac{\partial f}{\partial \lambda} + \sum_{t = 0}^T B_t A_{t + 1} ... A_T \frac{\partial f}{\partial \hat{w}} ~~~ \text{# by the Chain Rule}\\]
-	\\[ \text{where } A_{t + 1} = \frac{\partial \Xi_{t + 1}(w_t, \lambda)}{\partial w_t} = \frac{\partial w_{t + 1}}{\partial w_t}, B_{t + 1} = \frac{\partial \Xi_{t + 1}(w_t, \lambda)}{\partial \lambda} = \frac{\partial w_{t + 1}}{\partial \lambda} \text{ for } t \geq 0, B_0 = \frac{\partial \Xi_{0} (\lambda)}{\partial \lambda}\\]
+	\\[ \text{where } A_{t + 1} = \frac{\partial \Xi_{t + 1}(w_t, \lambda)}{\partial w_t} = \frac{\partial w_{t + 1}}{\partial w_t}, B_{t + 1} = \frac{\partial \Xi_{t + 1}(w_t, \lambda)}{\partial \lambda} = \frac{\partial w_{t + 1}}{\partial \lambda} \text{ for } t \geq 0, B_0 = \frac{d \Xi_{0} (\lambda)}{d \lambda}\\]
 	* dimensions:
 		* denote $w_t \in \mathbb{R}^M$ and $\lambda \in \mathbb{R}^N$, then $A_t \in \mathbb{R}^{M \times M}$, $B_t \in \mathbb{R}^{N \times M}$
 	* **reverse mode differentiation** (RMD):
-		\\[ \frac{\partial f}{\partial \lambda} = h_{0}, ~~~ \alpha_T = \frac{\partial f}{\partial \hat{w}}, ~~~ h_T = \frac{\partial f}{\partial \lambda}\\]
-		\\[ h_{t - 1} = h_t + B_t \alpha_t, ~~~ \alpha_{t - 1} = A_t\alpha_t, ~~~ t = 1, ..., T \\]
+		\\[ \frac{d f}{d \lambda} = h_{-1}, ~~~ \alpha_T = \frac{\partial f}{\partial \hat{w}}, ~~~ h_T = \frac{\partial f}{\partial \lambda}\\]
+		\\[ h_{t - 1} = h_t + B_t \alpha_t, ~~~ \alpha_{t - 1} = A_t\alpha_t, ~~~ t = 0, ..., T \\]
 		* need to store intermediate values $\\{w_t \in \mathbb{R}^M\\}_{t = 1}^T$, then the space requirement is $O(MT)$
 	* **forward mode differentiation** (FMD):
-		\\[ \frac{\partial f}{\partial \lambda} = Z_T \frac{\partial f}{\partial \hat{w}} + \frac{\partial f}{\partial \lambda}, ~~~ Z_0 = B_0\\]
+		\\[ \frac{d f}{d \lambda} = Z_T \frac{\partial f}{\partial \hat{w}} + \frac{\partial f}{\partial \lambda}, ~~~ Z_0 = B_0\\]
 		\\[ Z_{t + 1} = Z_t A_{t + 1} + B_{t + 1}, ~~~ t = 0, ..., T - 1\\]
 		* need to propagate the matrices $Z_t \in \mathbb{R}^{M \times N}$, so the time complexity is N times of that of reverse mode RMD (matrix-matrix vs. matrix-vector multiplications), but no need to store intermediate values $w_t$ from the forward pass 
 	* K-step **truncated backpropagation** (K-RMD):
