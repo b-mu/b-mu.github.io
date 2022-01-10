@@ -33,6 +33,11 @@ bundle show minima
 		* ```$$...$$``` is only rendered as display math if the lines above and below it are blank
 	* the above code uses the copy of MathJax from a Content Delivery Network [cdnjs](https://cdnjs.com/), which needs network access. alternative: download and install a local copy of MathJax on server/hard disk
 
+3: Create a local copy of ```_layouts``` and save the change
+```
+cp -r {path to _layouts in the bundle} {path to repo}
+```
+
 # Reference:
 * [MathJax v2.7 docs: Loading and Configuring MathJax](https://docs.mathjax.org/en/v2.7-latest/configuration.html)
 * [Blog: Use MathJax to write Equations in Jekyll blogs](http://zjuwhw.github.io/2017/06/04/MathJax.html)
