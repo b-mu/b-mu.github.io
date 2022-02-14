@@ -17,7 +17,7 @@ note: the following tutorial will use an example with two p3.16 instance (16 V10
 	* run ```export NCCL_SOCKET_IFNAME=ens3``` to set the environment variable
 4. Add multi-node support in python script
 	* in ```init_process_group```, we should provide:
-		* url: one can use the private IPv4 address of node 0, e.g. ```tcp://172.31.22.234:23456```
+		* url: one can use the private IPv4 address of node 0 and the port name, e.g. ```tcp://172.31.22.234:23456```
 			* this is one of the initialization method (other option e.g. shared file system, but need more configurations)
 		* node index (e.g. 0 and 1 with two nodes)
 		* number of processors per node: to calculate the global rank of a GPU
@@ -29,4 +29,4 @@ note: the following tutorial will use an example with two p3.16 instance (16 V10
 6. Go fast girl!
 
 # Reference
-* [pt-distributed-tutorial](https://github.com/inkawhich/pt-distributed-tutorial/blob/master/pytorch-aws-distributed-tutorial.py)
+* [pt-distributed-tutorial by Nathan Inkawhich](https://github.com/inkawhich/pt-distributed-tutorial/blob/master/pytorch-aws-distributed-tutorial.py)
